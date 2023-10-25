@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- DB연결 정보 -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/spring?serverTimeZone=UTC"/>
+		<property name="username" value="root"/>
+		<property name="password" value="mysql"/>
+	</bean>
+	
+	<!-- sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mapper/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:mapper/*Mapper*.xml"/>
+	</bean>
+	
+	<!-- sqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" 
+	destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+	<bean id="memberDao" class="exam.member.dao.MemberDaoImpl">
+		<constructor-arg ref="sqlSession" />
+	</bean>
+
+	<bean id="memberReg" class="exam.member.service.MemberRegisterServiceImpl">
+		<constructor-arg ref="memberDao" />
+	</bean>
+
+	<bean id="memberPrinter" class="exam.member.service.MemberPrinterServiceImpl" />
+
+	<bean id="memberList" class="exam.member.service.MemberListPrinterServiceImpl">
+		<constructor-arg ref="memberDao" />
+		<constructor-arg ref="memberPrinter" />
+	</bean>
+	
+	<bean id="changePassword" class="exam.member.service.ChangePasswordServiceImpl">
+		<constructor-arg ref="memberDao"/>
+	</bean>
+	
+	
+
+	<bean id="memberUI" class="exam.member.ui.MemberUI">
+		<property name="memberRegisterService" ref="memberReg" />
+		<property name="memberListPrinterService" ref="memberList" />
+		<property name="changePasswordService" ref="changePassword"/>
+	</bean>
+	
+	<!-- 사용할 빈 -->
+	
+
+</beans>

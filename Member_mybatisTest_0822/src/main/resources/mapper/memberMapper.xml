@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberMapper">
+	
+	<insert id="insertMember">
+		insert into member (email, name, password, registerDate)
+		values (#{email}, #{name}, #{password}, #{registerDate})
+	</insert>
+	
+	<select id="selectEmail" resultType="exam.member.vo.MemberVo">
+		select * from member where email=#{email}
+	</select>
+	
+	<!-- 수정하기 -->
+	<select id="selectAll" resultType="exam.member.vo.MemberVo">
+		select * from member
+	</select>
+	
+	<update id="updateMember">
+		update member set password=#{password} where email=#{email}
+	</update>
+	
+	<delete id="deleteMember">
+		delete from member where email=#{email}
+	</delete>
+	
+</mapper>
