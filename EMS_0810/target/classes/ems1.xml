@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+<bean id="initSampleData" class="ems.member.utils.InitSampleData">
+	<property name="sNums">
+		<array>
+				<value>2023001</value>
+				<value>2023002</value>
+				<value>2023003</value>				
+			</array>
+		</property>
+		<property name="sIds">
+			<array>
+				<value>kskim1</value>
+				<value>kskim2</value>
+				<value>kskim13</value>				
+			</array>
+		</property>
+		<property name="sPws">
+			<array>
+				<value>1234</value>
+				<value>1234</value>
+				<value>1234</value>
+				
+			</array>
+		</property>
+		<property name="sNames">
+			<array>
+				<value>홍길동</value>
+				<value>김길동</value>
+				<value>박길동</value>
+				
+			</array>
+		</property>
+		<property name="sAges">
+			<array>
+				<value>19</value>
+				<value>22</value>
+				<value>20</value>
+				
+			</array>
+		</property>
+		<property name="sGenders">
+			<array>
+				<value>M</value>
+				<value>W</value>
+				<value>W</value>
+				
+			</array>
+		</property>
+		<property name="sMajors">
+			<array>
+				<value>영문</value>
+				<value>컴공</value>
+				<value>서비스디자인</value>				
+			</array>
+		</property>
+</bean>
+
+<!-- DB정보 빈  -->
+<bean id ="studentDao" class="ems.member.dao.StudentDao"/>
+
+<!-- 각 서비스들에 생성자에 DB빈을 주입 -->
+<!-- 등록 -->
+<bean id="studentRegisterService" 
+    class="ems.member.service.StudentRegisterService">
+<constructor-arg ref="studentDao" />
+</bean>
+
+<!-- 선택 -->
+<bean id="studentSelectService" 
+    class="ems.member.service.StudentSelectService">
+<constructor-arg ref="studentDao" />
+</bean>
+<!-- 수정 -->
+<bean id="studentModifyService" 
+    class="ems.member.service.StudentModifyService">
+<constructor-arg ref="studentDao" />
+</bean>
+<!-- 삭제 -->
+<bean id="studentDeleteService" 
+    class="ems.member.service.StudentDeleteService">
+<constructor-arg ref="studentDao" />
+</bean>
+<!-- 전체 조회 -->
+<bean id="studentAllSelectService" 
+    class="ems.member.service.StudentAllSelectService">
+<constructor-arg ref="studentDao" />
+</bean>
+
+<!-- 출력빈 -->
+<bean id="printInfo" class="ems.member.service.PrintStudentInformationService">
+	<constructor-arg ref="studentAllSelectService" />
+</bean>
+
+</beans>
