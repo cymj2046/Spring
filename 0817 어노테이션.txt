@@ -1,0 +1,16 @@
+0817
+
+1 . 어노테이션
+
+방법 
+1) context:annatation-config
+=> xml에 빈을 생성
+=> 주입만 어노테이션을 사용
+(1) Autowired : 생성자, 필드, setter 메서드 앞에
+(2) Resource : 추가 라이브러리 필요. 필드, setter메서드 앞에
+(3) Inject : 추가  라이브러리 필요. 생성자, 필드, setter메서드 앞에
+
+2) context:component-scan
+=> 빈과 주입을 자바에서 설정(xml에서는 생성하지 않음)
+=> 빈을 만들 때 : @component, @controller, @service
+=> 주입은 동일
